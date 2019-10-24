@@ -6,5 +6,6 @@ namespace Kzvb.DataScraper.Infra.Services
 	public interface IKzvbDataScraper
 	{
 		IEnumerable<GameResultModel> GetGameResultsForDivision(string division);
+		IEnumerable<ClubRankingModel> GetRankingForDivision(string division);
 	}
 }

@@ -1,23 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using HtmlAgilityPack;
 using Kzvb.DataScraper.Infra.Models;
 
 namespace Kzvb.DataScraper.Infra.Services
 {
 	public class KzvbDataScraper : IKzvbDataScraper
 	{
+		private readonly IPageRequesterService _pageRequesterService;
+
+		public KzvbDataScraper(IPageRequesterService pageRequesterService)
+		{
+			_pageRequesterService = pageRequesterService;
+		}
+
 		public IEnumerable<GameResultModel> GetGameResultsForDivision(string division)
 		{
-			HtmlWeb website = new HtmlWeb();
-			website.AutoDetectEncoding = false;
-			website.OverrideEncoding = Encoding.Default;
 			var url = $"http://www.kzvb.be/(S(w2uz1u45vxotxf55ihxffz45))/display/display.aspx?pagetype=Uitslagen_list&Uitslagen_Afdeling={division}";
-			HtmlDocument doc = website.Load(url);
+			var webPage = _pageRequesterService.LoadWebPage(url);
 
 			// Get the root table with the results table inside it.
-			var rootTable = doc.DocumentNode.Descendants("table").Where(d => d.Attributes.Contains("id") && d.Attributes["id"].Value.Contains("Uitslagen_ListGrid")).First();
+			var rootTable = webPage.DocumentNode.Descendants("table").Where(d => d.Attributes.Contains("id") && d.Attributes["id"].Value.Contains("Uitslagen_ListGrid")).First();
 
 			// Get the child table with the actual results
 			var resultsTable = rootTable.Descendants("table").First();
@@ -43,6 +45,52 @@ namespace Kzvb.DataScraper.Infra.Services
 					Visitors = fields.ElementAt(4).InnerText,
 					Score = $"{fields.ElementAt(5).InnerText}-{fields.ElementAt(7).InnerText}"
 				});
+			}
+
+			return results;
+		}
+
+		public IEnumerable<ClubRankingModel> GetRankingForDivision(string division)
+		{
+			var url = $"http://www.kzvb.be/(S(khl1gsyrzc5ium55wptq1oig))/display/display.aspx?pagetype=klassementen_list&Afdeling={division}";
+			var webPage = _pageRequesterService.LoadWebPage(url);
+
+			// Get the root table with the results table inside it.
+			var rootTable = webPage.DocumentNode.Descendants("table").Where(d => d.Attributes.Contains("id") && d.Attributes["id"].Value.Contains("Klassementen_ListGrid")).First();
+
+			// Get the child table with the actual results
+			var resultsTable = rootTable.Descendants("table").First();
+
+			// Get the body of the results table and all rows with a bgcolor attribute
+			var rows = resultsTable.Descendants("tr").Where(r => r.Attributes.Contains("bgcolor") && r.Attributes["bgcolor"].Value.Contains("white")).ToArray();
+
+			var results = new List<ClubRankingModel>();
+			var ranking = 1;
+
+			//go over each row
+			foreach (var row in rows)
+			{
+				// get the list of td nodes from the tr
+				var fields = row.Descendants("td");
+
+				//add a new product with the content of every td inner text
+				results.Add(new ClubRankingModel
+				{
+					Ranking = ranking,
+					Division = fields.ElementAt(0).InnerText,
+					ClubNumber = fields.ElementAt(1).InnerText,
+					ClubName = fields.ElementAt(2).InnerText,
+					Points = fields.ElementAt(3).InnerText,
+					GoalsDifference = fields.ElementAt(4).InnerText,
+					GoalsFor = fields.ElementAt(5).InnerText,
+					GoalsAgainst = fields.ElementAt(6).InnerText,
+					Wins = fields.ElementAt(7).InnerText,
+					Losses = fields.ElementAt(8).InnerText,
+					Draws = fields.ElementAt(9).InnerText,
+					GamesPlayed = fields.ElementAt(10).InnerText,
+				});
+
+				ranking++;
 			}
 
 			return results;

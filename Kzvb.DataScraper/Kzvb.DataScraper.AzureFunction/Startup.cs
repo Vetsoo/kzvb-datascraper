@@ -11,6 +11,7 @@ namespace Kzvb.DataScraper.AzureFunction
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
 			builder.Services.AddSingleton<IKzvbDataScraper, KzvbDataScraper>();
+			builder.Services.AddSingleton<IPageRequesterService, PageRequesterService>();
 		}
 	}
 }
