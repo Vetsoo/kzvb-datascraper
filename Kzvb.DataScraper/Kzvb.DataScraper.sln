@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kzvb.DataScraper", "Kzvb.DataScraper\Kzvb.DataScraper.csproj", "{65EFCF89-3BCA-45F9-91E2-CA0F3E9CA22C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kzvb.DataScraper", "Kzvb.DataScraper\Kzvb.DataScraper.csproj", "{65EFCF89-3BCA-45F9-91E2-CA0F3E9CA22C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kzvb.DataScraper.AzureFunction", "Kzvb.DataScraper.AzureFunction\Kzvb.DataScraper.AzureFunction.csproj", "{683FC7DA-7D64-480C-8C34-B89D1B2E8BDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kzvb.DataScraper.Infra", "Kzvb.DataScraper.Infra\Kzvb.DataScraper.Infra.csproj", "{ACD882B0-05AF-4090-AB3B-840EF132150D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{65EFCF89-3BCA-45F9-91E2-CA0F3E9CA22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65EFCF89-3BCA-45F9-91E2-CA0F3E9CA22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65EFCF89-3BCA-45F9-91E2-CA0F3E9CA22C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{683FC7DA-7D64-480C-8C34-B89D1B2E8BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683FC7DA-7D64-480C-8C34-B89D1B2E8BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683FC7DA-7D64-480C-8C34-B89D1B2E8BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683FC7DA-7D64-480C-8C34-B89D1B2E8BDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD882B0-05AF-4090-AB3B-840EF132150D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD882B0-05AF-4090-AB3B-840EF132150D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD882B0-05AF-4090-AB3B-840EF132150D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD882B0-05AF-4090-AB3B-840EF132150D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
