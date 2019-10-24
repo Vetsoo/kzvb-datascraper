@@ -3,7 +3,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Kzvb.DataScraper.Infra.Services;
+using Kzvb.DataScraper.Infra.Services.Interfaces;
 using System;
 
 namespace Kzvb.DataScraper.AzureFunction

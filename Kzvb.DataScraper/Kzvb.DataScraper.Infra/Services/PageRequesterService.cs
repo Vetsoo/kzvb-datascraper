@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Kzvb.DataScraper.Infra.Services.Interfaces;
 using System.Text;
 
 namespace Kzvb.DataScraper.Infra.Services

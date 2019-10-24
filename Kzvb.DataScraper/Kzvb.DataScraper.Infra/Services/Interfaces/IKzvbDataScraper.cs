@@ -1,7 +1,7 @@
 ﻿using Kzvb.DataScraper.Infra.Models;
 using System.Collections.Generic;
 
-namespace Kzvb.DataScraper.Infra.Services
+namespace Kzvb.DataScraper.Infra.Services.Interfaces
 {
 	public interface IKzvbDataScraper
 	{

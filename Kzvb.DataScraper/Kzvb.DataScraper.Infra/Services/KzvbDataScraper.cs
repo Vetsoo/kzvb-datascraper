@@ -1,20 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Kzvb.DataScraper.Infra.Models;
+using Kzvb.DataScraper.Infra.Services.Interfaces;
 
 namespace Kzvb.DataScraper.Infra.Services
 {
 	public class KzvbDataScraper : IKzvbDataScraper
 	{
 		private readonly IPageRequesterService _pageRequesterService;
+		private readonly ICacheService _cacheService;
 
-		public KzvbDataScraper(IPageRequesterService pageRequesterService)
+		public KzvbDataScraper(IPageRequesterService pageRequesterService, ICacheService cacheService)
 		{
 			_pageRequesterService = pageRequesterService;
+			_cacheService = cacheService;
 		}
 
 		public IEnumerable<GameResultModel> GetGameResultsForDivision(string division)
 		{
+			var results = _cacheService.GetFromCache<List<GameResultModel>>($"gameresults_{division}");
+			if (results != null)
+				return results;
+
 			var url = $"http://www.kzvb.be/(S(w2uz1u45vxotxf55ihxffz45))/display/display.aspx?pagetype=Uitslagen_list&Uitslagen_Afdeling={division}";
 			var webPage = _pageRequesterService.LoadWebPage(url);
 
@@ -27,7 +34,7 @@ namespace Kzvb.DataScraper.Infra.Services
 			// Get the body of the results table and all rows with a bgcolor attribute
 			var rows = resultsTable.Descendants("tr").Where(r => r.Attributes.Contains("bgcolor") && r.Attributes["bgcolor"].Value.Contains("white")).ToArray();
 
-			var results = new List<GameResultModel>();
+			results = new List<GameResultModel>();
 
 			//go over each row
 			foreach (var row in rows)
@@ -47,11 +54,16 @@ namespace Kzvb.DataScraper.Infra.Services
 				});
 			}
 
+			_cacheService.AddToCache($"gameresults_{division}", results);
 			return results;
 		}
 
 		public IEnumerable<ClubRankingModel> GetRankingForDivision(string division)
 		{
+			var results = _cacheService.GetFromCache<List<ClubRankingModel>>($"clubranking_{division}");
+			if (results != null)
+				return results;
+
 			var url = $"http://www.kzvb.be/(S(khl1gsyrzc5ium55wptq1oig))/display/display.aspx?pagetype=klassementen_list&Afdeling={division}";
 			var webPage = _pageRequesterService.LoadWebPage(url);
 
@@ -64,7 +76,7 @@ namespace Kzvb.DataScraper.Infra.Services
 			// Get the body of the results table and all rows with a bgcolor attribute
 			var rows = resultsTable.Descendants("tr").Where(r => r.Attributes.Contains("bgcolor") && r.Attributes["bgcolor"].Value.Contains("white")).ToArray();
 
-			var results = new List<ClubRankingModel>();
+			results = new List<ClubRankingModel>();
 			var ranking = 1;
 
 			//go over each row
@@ -93,6 +105,7 @@ namespace Kzvb.DataScraper.Infra.Services
 				ranking++;
 			}
 
+			_cacheService.AddToCache($"clubranking_{division}", results);
 			return results;
 		}
 	}

@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 
-namespace Kzvb.DataScraper.Infra.Services
+namespace Kzvb.DataScraper.Infra.Services.Interfaces
 {
 	public interface IPageRequesterService
 	{

@@ -1,4 +1,5 @@
 ﻿using Kzvb.DataScraper.Infra.Services;
+using Kzvb.DataScraper.Infra.Services.Interfaces;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,7 @@ namespace Kzvb.DataScraper.AzureFunction
 		{
 			builder.Services.AddSingleton<IKzvbDataScraper, KzvbDataScraper>();
 			builder.Services.AddSingleton<IPageRequesterService, PageRequesterService>();
+			builder.Services.AddSingleton<ICacheService, CacheService>();
 		}
 	}
 }
