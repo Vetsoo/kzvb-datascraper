@@ -1,2 +1,2 @@
 # kzvb-datascraper
-Scrapes data from the KZVB website.
+Azure Function that scrapes data from the KZVB website.
