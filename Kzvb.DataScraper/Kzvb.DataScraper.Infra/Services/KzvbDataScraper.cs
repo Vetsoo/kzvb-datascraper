@@ -64,7 +64,7 @@ namespace Kzvb.DataScraper.Infra.Services
 			if (results != null)
 				return results;
 
-			var url = $"https://www.kzvb.be/display/display.aspx?pagetype=klassementen_list&Afdeling=2B{division}";
+			var url = $"https://www.kzvb.be/display/display.aspx?pagetype=klassementen_list&Afdeling={division}";
 			var webPage = _pageRequesterService.LoadWebPage(url);
 
 			// Get the root table with the results table inside it.
