@@ -22,7 +22,7 @@ namespace Kzvb.DataScraper.Infra.Services
 			if (results != null)
 				return results;
 
-			var url = $"http://www.kzvb.be/(S(w2uz1u45vxotxf55ihxffz45))/display/display.aspx?pagetype=Uitslagen_list&Uitslagen_Afdeling={division}";
+			var url = $"https://www.kzvb.be/display/display.aspx?pagetype=Uitslagen_list&Uitslagen_Afdeling={division}";
 			var webPage = _pageRequesterService.LoadWebPage(url);
 
 			// Get the root table with the results table inside it.
@@ -64,7 +64,7 @@ namespace Kzvb.DataScraper.Infra.Services
 			if (results != null)
 				return results;
 
-			var url = $"http://www.kzvb.be/(S(khl1gsyrzc5ium55wptq1oig))/display/display.aspx?pagetype=klassementen_list&Afdeling={division}";
+			var url = $"https://www.kzvb.be/display/display.aspx?pagetype=klassementen_list&Afdeling=2B{division}";
 			var webPage = _pageRequesterService.LoadWebPage(url);
 
 			// Get the root table with the results table inside it.
